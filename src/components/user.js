@@ -1,33 +1,31 @@
 import React from 'react'
 import { Button } from 'react-bootstrap';
-import { useEffect, useState } from "react";
+import { useState } from "react";
 import TareasUpdateForm from './tareasUpdateForm'
 
-const Tarea = ({ tarea, onDelete, onUpdate }) => {
+const User = ({ user, onDelete, onUpdate }) => {
     const [showForm, setShowForm] = useState(false)
 
     const clickTarea = () => {
-        onDelete(tarea.id)
+        onDelete(user.id)
     }
 
     // Regreso de informcion dinamica 
     return (
         <div>
-            <h5>{tarea.name}</h5>
-            <h5>{`Id: ${tarea.id}`}</h5>
-            <h5>{`Id: ${tarea._id}`}</h5>
-            <h5>{`Subject: ${tarea.name}`}</h5>
-            <h5>{`Grade: ${tarea.puntos}`}</h5>
-            <h5>{`Delivery Date: ${tarea.fechaEntrega}`}</h5>
-            <h5>{`Creation Date: ${tarea.fechaCreacion}`}</h5>
+            <h5>{user.name}</h5>
+            <h5>{`Id: ${user.id}`}</h5>
+            <h5>{`Id: ${user._id}`}</h5>
+            <h5>{`Email: ${user.email}`}</h5>
+            <h5>{`Password: ${user.password}`}</h5>
             <Button variant="danger" onClick={clickTarea} className="deleteBtn">Delete</Button>
             <Button variant="primary" className="new-btn" onClick={() => setShowForm(!showForm)}>
                 {showForm ? "Close" : "Update info"}
             </Button>
-            {showForm && <TareasUpdateForm onClickFn={onUpdate} oldTarea={tarea} ></TareasUpdateForm>}
+            {showForm && <TareasUpdateForm onClickFn={onUpdate} oldTarea={user} ></TareasUpdateForm>}
             <hr></hr>
         </div>
     )
 }
 
-export default Tarea;
+export default User;

@@ -1,6 +1,7 @@
 //require("dotenv").config()
 import { useEffect, useState } from "react";
 import Tarea from "./tarea";
+import User from "./user";
 import TareasForm from "./tareasForm"
 import { Button } from 'react-bootstrap';
 
@@ -8,27 +9,27 @@ import { Button } from 'react-bootstrap';
 const TareasList = () => {
 
 
-    const [tareas, setTareas] = useState([]);
+    const [user, setUser] = useState([]);
     const [showForm, setShowForm] = useState(false);
 
     // Hook para editar varibles de estado
     useEffect(() => {
-        fetch("https://tareas-api-devsoft.azurewebsites.net/tareas/")
+        fetch("https://api-rest-batarseshija.azurewebsites.net/users")
             .then((res) => res.json())
-            .then((data) => setTareas(data.data))
+            .then((data) => setUser(data.data))
             .catch((err) => console.log(`Error: ${err}`));
     }, []);
 
     const getTareas = () => {
-        fetch("https://tareas-api-devsoft.azurewebsites.net/tareas")
+        fetch("https://api-rest-batarseshija.azurewebsites.net/users")
             .then((res) => res.json())
-            .then((data) => setTareas(data.data))
+            .then((data) => setUser(data.data))
             .then((err) => console.log(`Error: ${err}`));
     }
 
     const createTarea = (data) => {
         try {
-            fetch("https://tareas-api-devsoft.azurewebsites.net/tareas", {
+            fetch("https://api-rest-batarseshija.azurewebsites.net/users", {
                 method: 'POST',
                 headers: {
                     'Content-Type': 'application/json',
@@ -37,7 +38,7 @@ const TareasList = () => {
             })
                 .then(response => response.json())
                 .then(dataResponse => {
-                    setTareas([...tareas, dataResponse.data]);
+                    setUser([...user, dataResponse.data]);
                     setShowForm(false);
                 });
         } catch (err) {
@@ -47,7 +48,7 @@ const TareasList = () => {
 
     const deleteTarea = (data) => {
         try {
-            fetch(`https://tareas-api-devsoft.azurewebsites.net/tareas/${data}`, {
+            fetch(`https://api-rest-batarseshija.azurewebsites.net/users/${data}`, {
                 method: "DELETE"
             })
                 .then(response => response.json())
@@ -65,7 +66,7 @@ const TareasList = () => {
 
     const updateTarea = (data) => {
         try {
-            fetch(`https://tareas-api-devsoft.azurewebsites.net/tareas/${data._id}`, {
+            fetch(`https://api-rest-batarseshija.azurewebsites.net/users/${data._id}`, {
                 method: 'PUT',
                 headers: {
                     'Content-Type': 'application/json',
@@ -87,11 +88,11 @@ const TareasList = () => {
     // Regreso dinamico de informacion
     return (
         <div>
-            {tareas.map((tarea, index) => (
-                <Tarea
+            {user.map((user, index) => (
+                <User
                     key={index}
                     index={index}
-                    tarea={tarea}
+                    user={user}
                     onDelete={deleteTarea}
                     onUpdate={updateTarea}
                 />
